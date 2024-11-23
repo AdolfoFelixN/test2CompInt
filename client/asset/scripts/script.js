@@ -70,7 +70,7 @@ const loadProducts = async() => {
         `
 
         document.getElementById('home').innerHTML = document.getElementById('home').innerHTML + x;
-        document.getElementById('2').innerHTML = "CHECKOUT $" + payable;
+        document.getElementById('2').innerHTML = "PAGAR $" + payable;
         InitialCount += 1;
     }
 
