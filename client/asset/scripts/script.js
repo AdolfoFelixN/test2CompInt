@@ -10,7 +10,8 @@ const deleteProducts = async() => {
     const products = responseText;
 
     for (let product of products) {
-        const response = await axios.delete(`https://compintnodejs-production.up.railway.app/product/${product.id}`)
+        const productId = product.id.toString();
+        const response = await axios.delete(`https://compintnodejs-production.up.railway.app/product/${productId}`)
 
     }
     location.reload();
