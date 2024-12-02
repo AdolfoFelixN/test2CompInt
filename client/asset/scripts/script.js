@@ -19,7 +19,7 @@ const deleteProducts = async () => {
 };
 
 const checkout = async (event) => {
-    event.preventDefault(); // Prevenir la redirección por defecto del formulario
+    //event.preventDefault(); // Prevenir la redirección por defecto del formulario
 
     //const url = "https://api.scanova.io/v2/qrcode/text?data=upi%3A%2F%2Fpay%3Fpa%3Dshebinjosejacob2014%40oksbi%26pn%3DTXN965654954321%26tn%3DA%26am%3D4%26cu%3DINR%26url%3Dhttps%3A%2F%2Fcoderscafe.cf%2F&size=l&error_correction=M";
 
