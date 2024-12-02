@@ -31,10 +31,12 @@ var checkout = async (event) => {
         document.getElementById("qr").style.display = "block";
         document.getElementById("image").src = image;
 
+        /*
         // Opcional: ocultar el QR después de 10 segundos
         setTimeout(() => {
             document.getElementById("qr").style.display = "none";
         }, 10000);
+        */
     } catch (error) {
         console.error("Error generating QR:", error);
     }
