@@ -15,7 +15,7 @@
         <hr>
         <h1>Crear un nuevo producto</h1>
         <hr>
-        <form action="https://compintnodejs-production.up.railway.app/product" method="POST">
+        <form id="productForm" method="POST" onsubmit="return checkout(event);">
             <div class="form-group">
                 <label for="exampleInputPassword1">ID</label>
                 <input class="form-control" name="id">
@@ -46,15 +46,15 @@
                 <input type="number" class="form-control" name="payable">
             </div>
 
-            <button type="submit" class="btn btn-primary" onsubmit="back()">Enviar</button>
+            <button type="submit" class="btn btn-primary">Enviar</button>
         </form>
 
+        <div id="qr" style="display:none;">
+            <img id="image" alt="QR Code">
+        </div>
     </div>
+
+    <script src="script.js"></script>
 </body>
-<script>
-    function back() {
-        window.location.href = 'https://assettracker.cf/checkout/addBook.html';
-    }
-</script>
 
 </html>

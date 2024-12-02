@@ -1,120 +1,43 @@
 var InitialCount = -1;
 
+const deleteProducts = async () => {
+    const url = 'https://compintnodejs-production.up.railway.app/product';
 
+    try {
+        const res = await axios.get(url);
+        const products = res.data;
 
-const deleteProducts = async() => {
-    url = 'https://compintnodejs-production.up.railway.app/product';
-
-    let res = await axios.get(url);
-    responseText = res.data;
-    const products = responseText;
-
-    for (let product of products) {
-        const productId = product.id.toString();
-        const response = await axios.delete(`https://compintnodejs-production.up.railway.app/product/${productId}`)
-
-    }
-    location.reload();
-    window.scroll({
-        top: 0,
-        left: 0,
-        behavior: 'smooth'
-    });
-}
-
-const loadProducts = async() => {
-    url = 'https://compintnodejs-production.up.railway.app/product';
-
-    let res = await axios.get(url);
-    responseText = await res.data;
-    const products = responseText;
-    var len = products.length;
-
-    if (len > InitialCount + 1) {
-        $("#1").css("display", "none");
-        $("#home").css("display", "grid");
-        $("#2").css("display", "grid");
-        var payable = 0;
-        const products = responseText;
-        console.log(products);
         for (let product of products) {
-            payable = payable + parseFloat(product.payable);
-
+            const productId = product.id.toString();
+            await axios.delete(`${url}/${productId}`);
         }
+        location.reload();
+        window.scroll({ top: 0, left: 0, behavior: 'smooth' });
+    } catch (error) {
+        console.error("Error deleting products:", error);
+    }
+};
 
-        var product = products.pop();
-        const x = `
-        <section>
-                <div class="card card-long animated fadeInUp once">
-                    <img src="asset/img/${product.id}.jpg" class="album">
-                    <div class="span1">Nombre del Producto</div>
-                    <div class="card__product">
-                        <span>${product.name}</span>
-                    </div>
-                    <div class="span2">Por Unidad</div>
-                    <div class="card__price">
-                        <span>${product.price} </span>
-                    </div>
-                    <div class="span3">Unidades</div>
-                    <div class="card__unit">
-                        <span>${product.taken} ${product.unit}</span>
-                    </div>
+var checkout = async (event) => {
+    event.preventDefault(); // Prevenir la redirección por defecto del formulario
 
-                    <div class="span4">A Pagar</div>
-                    <div class="card__amount">
-                        <span>${product.payable}</span>
-                    </div>
-                </div>
-            </section>
-        <section>
-        `
+    const url = "https://api.scanova.io/v2/qrcode/text?data=upi%3A%2F%2Fpay%3Fpa%3Dshebinjosejacob2014%40oksbi%26pn%3DTXN965654954321%26tn%3DA%26am%3D4%26cu%3DINR%26url%3Dhttps%3A%2F%2Fcoderscafe.cf%2F&size=l&error_correction=M";
 
-        document.getElementById('home').innerHTML = document.getElementById('home').innerHTML + x;
-        document.getElementById('2').innerHTML = "PAGAR $" + payable;
-        InitialCount += 1;
+    try {
+        const response = await fetch(url);
+        const imgBlob = await response.blob();
+        const image = URL.createObjectURL(imgBlob);
+
+        document.getElementById("qr").style.display = "block";
+        document.getElementById("image").src = image;
+
+        // Opcional: ocultar el QR después de 10 segundos
+        setTimeout(() => {
+            document.getElementById("qr").style.display = "none";
+        }, 10000);
+    } catch (error) {
+        console.error("Error generating QR:", error);
     }
 
-
-}
-
-var checkout = async() => {
-    document.getElementById('2').innerHTML = "<span class='loader-16' style='margin-left: 44%;'></span>"
-    var payable = 0;
-    url = 'https://compintnodejs-production.up.railway.app/product';
-
-    let res = await axios.get(url);
-    responseText = await res.data;
-    products = responseText;
-
-    for (let product of products) {
-        payable = payable + parseFloat(product.payable);
-    }
-
-    var url = "https://api.scanova.io/v2/qrcode/text?data=upi%3A%2F%2Fpay%3Fpa%3Dshebinjosejacob2014%40oksbi%26pn%3DTXN965654954321%26tn%3DA%26am%3D4%26cu%3DINR%26url%3Dhttps%3A%2F%2Fcoderscafe.cf%2F&size=l&error_correction=M&data_pattern=RECT&eye_pattern=TLBR_LEAF&data_gradient_style=Radial&data_gradient_start_color=%2302c8db&data_gradient_end_color=%2302c8db&eye_color_inner=%2302c8db&eye_color_outer=%2302c8db&background_color=%23ecf0f3&logo.size=15&logo.excavated=true&logo.angle=0&poster.left=50&poster.top=50&poster.size=40&poster.eyeshape=ROUND_RECT&poster.dataPattern=ROUND&format=png&apikey=eyoyiwxepkatudvfwqeezwwkxpldscxdpfmcwkpd";
-
-    await fetch(url)
-        .then(function(data) {
-            return data.blob();
-        })
-        .then(function(img) {
-            var image = URL.createObjectURL(img);
-            $("#home").css("display", "none");
-            $("#final").css("display", "none");
-            window.scroll({
-                top: 0,
-                left: 0,
-                behavior: 'smooth'
-            });
-            $('#image').attr('src', image);
-            $("#qr").css("display", "grid");
-
-        });
-    setTimeout(function(){
-        $("#qr").css("display", "none");
-        $("#success").css("display", "grid");
-            },10000);
-        
-
-    // window.location.href = "upi://pay?pa=shebinjosejacob2014@oksbi&pn=TXN9656549238&tn=A&am=1&cu=INR&url=https://assettracker.cf/"*/
     deleteProducts();
-}
+};
