@@ -68,28 +68,28 @@ const loadProducts = async () => {
       // Definir la imagen basada en el nombre del producto
       let productImage;
       switch (product.name.toLowerCase()) {
-        case "Atun":
+        case "atun":
           productImage = "asset/img/atun.jpg";
           break;
-        case "Lechera":
+        case "lechera":
           productImage = "asset/img/lechera.jpg";
           break;
-        case "Rufles":
+        case "rufles":
           productImage = "asset/img/ruffles.jpg"; 
           break;
-        case "Doritos":
+        case "doritos":
           productImage = "asset/img/doritos.jpg";
           break;
-        case "Pepsi":
+        case "pepsi":
           productImage = "asset/img/pepsi.jpg"; 
           break;
-        case "Manzana":
+        case "manzana":
           productImage = "asset/img/1.jpg"; 
           break;
-        case "Milky Way":
+        case "milky way":
           productImage = "asset/img/milkyWay.jpg"; 
           break;
-        case "Frijoles":
+        case "frijoles":
           productImage = "asset/img/frijoles.jpg"; 
           break;
         default:
